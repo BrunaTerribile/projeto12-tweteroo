@@ -8,7 +8,7 @@ app.use(express.json())
 let users = [
     {
         username: "bobesponja",
-        avatar: "https://static.wikia.nocookie.net/nickelodeon6666/images/1/18/BobEsponja.png/revision/latest?cb=20160421162154&path-prefix=pt-br"
+        avatar: "https://yt3.ggpht.com/ytc/AMLnZu9tYPIG3bxki2LZz-NRrvHtLHRL0-wW95Cjgcr2=s900-c-k-c0x00ffffff-no-rj"
     },
     {
         username: "patrick",
@@ -16,22 +16,22 @@ let users = [
     },
     {
         username: "sirigueijo",
-        avatar: "https://upload.wikimedia.org/wikipedia/pt/b/b1/Patrick_Estrela.png"
+        avatar: "https://www.pintarcolorir.com.br/wp-content/uploads/2015/11/desenhos-de-seu-sirigueijo-para-colorir-imagem-172x172.gif"
     }
 ]
 
 const tweets = [
     {
         username: "bobesponja",
-        tweet: "eu amo o hub"
+        tweet: "eu amo o hub",
     },
     {
         username: "patrick",
-        tweet: "bob esponja, vamos caçar agua-viva?"
+        tweet: "bob esponja, vamos caçar agua-viva?",
     },
     {
         username: "sirigueijo",
-        tweet: "dinheiro, dinheiro, dinheiro!"
+        tweet: "dinheiro, dinheiro, dinheiro!",
     }
 ]
 
@@ -41,9 +41,29 @@ app.post("/sign-up", (req, res) => {
         avatar: req.body.avatar
     }
 
-    console.log(userData)
     users.push(userData)
     res.send("OK")
+})
+
+app.post("/tweets", (req, res) => {
+    const newTweet = {
+        username: req.body.username,
+        tweet: req.body.tweet
+    };
+
+    tweets.push(newTweet)
+    res.send("OK")
+})
+
+app.get("/tweets", (req, res) => {
+
+    const render = tweets.map((t) => ({
+        username: (t.username),
+        tweet: (t.tweet),
+        avatar: (users.find((u) => u.username === t.username)).avatar,
+    }))
+
+    res.send(render)
 })
 
 app.listen(5000, () => {console.log("Server running in port: 5000")})
